@@ -86,7 +86,6 @@ public class ShoppingListServlet extends HttpServlet {
             
           session.setAttribute("username",request.getParameter("username"));
           session.setAttribute("List", items);
-          session.setAttribute("items", items);
          
           getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp") .forward(request,response); 
           return;
@@ -99,7 +98,6 @@ public class ShoppingListServlet extends HttpServlet {
             return;
         }
         session.setAttribute("List", items);
-        session.setAttribute("items", items);
         getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request, response);
     }
 
