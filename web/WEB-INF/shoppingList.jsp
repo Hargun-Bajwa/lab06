@@ -17,13 +17,13 @@
          Hello,${username}
          <a href="ShoppingList?action=logout"><input type="hidden" name="action" value="logout">Logout</a></p>
         <h2>List</h2>
-        <form method="post">
+        <form method="post" action="">
             
             <label>Add item: </label>
             <input type="text" name="itemName" required> <input type="submit" value="Add"><input type="hidden" name="action" value="Add">
         </form>
 
-        <form method="post">
+        <form method="post" action="">
             
             <ul>
                 <c:forEach items="${List}" var="item"><li>

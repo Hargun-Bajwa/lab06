@@ -34,7 +34,6 @@ public class ShoppingListServlet extends HttpServlet {
         }
             request.setAttribute("username", username);
              ArrayList<String> items = (ArrayList<String>) session.getAttribute("items");
-            request.setAttribute("items", items);
             request.setAttribute("List", items);
              getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request,response); 
     }
@@ -45,9 +44,8 @@ public class ShoppingListServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
        HttpSession session = request.getSession();
-       String username= request.getParameter("username");
-        request.setAttribute("username",session.getAttribute(username));
-            session.setAttribute("username",request.getParameter(username));
+        request.setAttribute("username",request.getParameter("username"));
+            session.setAttribute("username",request.getParameter("username"));
        String action = (String) request.getParameter("action");
        ArrayList<String> items = (ArrayList) session.getAttribute("items");
        
@@ -57,11 +55,9 @@ public class ShoppingListServlet extends HttpServlet {
         
         else if (action.equals("register")) {
             
-            session.setAttribute("List", items);
-                    request.setAttribute("List",items);
-                    username= request.getParameter("username");
-            session.setAttribute("username",username);
-            request.setAttribute("username",username);
+            session.setAttribute("List",items);
+            request.setAttribute("List",items);
+            request.setAttribute("username",request.getParameter("username"));
             getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request,response); 
             return;
             
@@ -73,9 +69,7 @@ public class ShoppingListServlet extends HttpServlet {
                 items.add(addItem);
                 request.setAttribute("List",items);
                 session.setAttribute("List", items);
-                username= request.getParameter("username");
-                request.setAttribute("username",username);
-                session.setAttribute("username", username);
+                request.setAttribute("username",request.getParameter("username"));
           getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request,response); 
           return;
         }
@@ -90,7 +84,7 @@ public class ShoppingListServlet extends HttpServlet {
             }
                 
             
-          session.setAttribute("username",username);
+          session.setAttribute("username",request.getParameter("username"));
           session.setAttribute("List", items);
           session.setAttribute("items", items);
          

@@ -17,7 +17,8 @@
         <form method="post" >
             <label>Username: </label>
             <input type="text" name="username" required>
-            <input type="submit" value="Register name"> <input type="hidden" name="action" value="register">       
+            <input type="submit" value="Register name"> 
+            <input type="hidden" name="action" value="register">       
         </form>
     </body>
 </html>
