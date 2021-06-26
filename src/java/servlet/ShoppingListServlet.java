@@ -42,7 +42,7 @@ public class ShoppingListServlet extends HttpServlet {
             throws ServletException, IOException {
         String action = request.getParameter("action");
         String username = request.getParameter("username");
-       // removed this part because my other code is not working.
+       
         //if(username==null||username.equals("")){
             //getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request,response); 
            // return;
@@ -57,10 +57,14 @@ public class ShoppingListServlet extends HttpServlet {
         else if(action.equals("Add")) {
             String addItem = (String) request.getParameter("itemName");
             HttpSession session=request.getSession(false);
-            ArrayList<String> items = (ArrayList) session.getAttribute("List");
+            ArrayList<String> items = (ArrayList) session.getAttribute("items");
        
+            if(items == null) {
+           items = (ArrayList) new ArrayList<>();
+            }
                 items.add(addItem);
-                session.setAttribute("List", items);
+                session.setAttribute("items", items);
+                request.setAttribute("List",items);
           getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request,response); 
           return;
         }
@@ -68,7 +72,7 @@ public class ShoppingListServlet extends HttpServlet {
         else if(action.equals("Delete")) {
             String deleteItem = request.getParameter("item");
             HttpSession session=request.getSession(false);
-            ArrayList<String> items = (ArrayList) session.getAttribute("List");
+            ArrayList<String> items = (ArrayList) session.getAttribute("items");
                 for(int i=0; i<items.size(); i++) {
                     if(items.get(i).equals(deleteItem)) {
                         items.remove(i);
@@ -76,7 +80,8 @@ public class ShoppingListServlet extends HttpServlet {
             }
                 
             
-          session.setAttribute("List", items);
+          session.setAttribute("items", items);
+          request.setAttribute("List",items);
          
           getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp") .forward(request,response); 
         }
