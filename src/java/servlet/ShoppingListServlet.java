@@ -26,7 +26,7 @@ public class ShoppingListServlet extends HttpServlet {
             getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
             return;
         }        
-        else if(username == null||username.equals("")) {
+        else if((username == null||username.equals(""))&&session==null) {
             getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
             return;
         }
