@@ -20,9 +20,10 @@ public class ShoppingListServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
          String username = request.getParameter("username");
          String action = (String) request.getParameter("action");
-        if (action!=null && action.equals("logout")) {
+        if (action!=null &&action.equals("logout")) {
             session = request.getSession(false);
             session.invalidate();
+            getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
             return;
         }        
         else if(username == null||username.equals("")) {
@@ -31,6 +32,7 @@ public class ShoppingListServlet extends HttpServlet {
         }
         else if(session!=null&&session.getAttribute("username")!=null){
             getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request,response); 
+            request.setAttribute("username",username);
             return;}
              getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request,response); 
     }
@@ -42,19 +44,16 @@ public class ShoppingListServlet extends HttpServlet {
             throws ServletException, IOException {
         String action = request.getParameter("action");
         String username = request.getParameter("username");
-       
-        //if(username==null||username.equals("")){
-            //getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request,response); 
-           // return;
-        //}
+            
         if (action.equals("register")) {
             HttpSession session=request.getSession();
-            request.setAttribute("username",request.getParameter("username"));
+            session.setAttribute("username",request.getParameter("username"));
+            request.setAttribute("username",session.getAttribute("username"));
             getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request,response); 
             return;
             
         }
-        else if(action.equals("Add")) {
+        if(action.equals("Add")) {
             String addItem = (String) request.getParameter("itemName");
             HttpSession session=request.getSession(false);
             ArrayList<String> items = (ArrayList) session.getAttribute("items");
@@ -73,6 +72,7 @@ public class ShoppingListServlet extends HttpServlet {
             String deleteItem = request.getParameter("item");
             HttpSession session=request.getSession(false);
             ArrayList<String> items = (ArrayList) session.getAttribute("items");
+            if(items != null){
                 for(int i=0; i<items.size(); i++) {
                     if(items.get(i).equals(deleteItem)) {
                         items.remove(i);
@@ -87,4 +87,4 @@ public class ShoppingListServlet extends HttpServlet {
         }
         }
 
-}
+    }}
